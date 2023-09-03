@@ -1,0 +1,3 @@
+[submodule "akari_yolo_inference"]
+	path = akari_yolo_inference
+	url = https://github.com/AkariGroup/akari_yolo_inference.git
