@@ -128,16 +128,15 @@ def main() -> None:
         frame = None
         detections = []
         frame, detections, tracklets = oakd_tracking_yolo.get_frame()
+        raw_frame = oakd_tracking_yolo.get_raw_frame()
         if frame is not None:
             oakd_tracking_yolo.display_frame("nn", frame, tracklets)
-            track_pair = (frame, tracklets)
+            track_pair = (raw_frame, tracklets)
             track_queue.append(track_pair)
             while len(track_queue) > QUEUE_SIZE:
                 track_queue.popleft()
             name = str(save_num).zfill(3)
-            if oakd_tracking_yolo.save_lost_frame(
-                track_queue, path=path, name=name, save_tracked=True
-            ):
+            if save_lost_frame(track_queue, path=path, name=name, save_tracked=True):
                 save_num += 1
         if cv2.waitKey(1) == ord("q"):
             break
